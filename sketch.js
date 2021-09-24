@@ -5,7 +5,7 @@ const Constraint = Matter.Constraint;
 
 var engine, world;
 var backgroundImg;
-
+var hour;
 var bg ;
 
 function preload() {
@@ -29,31 +29,35 @@ background(backgroundImg)
     Engine.update(engine);
 
     // write code to display time in correct format here
-getBackgroundImg() 
-
+fill("black")
+textSize(30)
+if(hour>=12){
+    text("time"+hour%12+"PM",50,100)
+}
+else if(hour===0){
+    text("time:12AM",100,100)
+}
+else{
+    text("time"+hour%12+"AM",50,100)
+}
 }
 
 async function getBackgroundImg(){
 
     // write code to fetch time from API
-    var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
+    var response = await fetch("https://worldtimeapi.org/api/timezone/Asia/Kolkata");
 
     //change the data in JSON format
     var responseJSON = await response.json()
 
     // write code slice the datetime
     var datetime = responseJSON.datetime
-    var hour = datetime.slice(11,13)
+     hour = datetime.slice(11,13)
      // add conditions to change the background images from sunrise to sunset
 
-   if(hour >= 04 && hour <= 06){
-bg = "sunrise1.png"
-   }else if(hour >=06 && hour<=08){
-    bg = "sunrise2.png" 
-   } else if(hour >=23 && hour==0){
-    bg = "sunset10.png" 
-   } else if(hour ==0 && hour<=03){
-    bg = "sunset11.png" 
+   if(hour >= 0 && hour < 18){
+    bg = "sunrise1.png"
+  
    }else{
        bg ="sunset12.png"
    }
